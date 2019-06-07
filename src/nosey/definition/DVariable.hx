@@ -1,7 +1,5 @@
 package nosey.definition;
 
-import nosey.definition.DType.DTypeRef;
-
 class DVariable
 {
     public var name (default, null):String;

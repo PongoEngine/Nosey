@@ -7,7 +7,7 @@ import nosey.definition.DParameter;
 import nosey.definition.DFunction;
 import nosey.definition.DType;
 import nosey.definition.DArg;
-import nosey.definition.DType.DTypeRef;
+import nosey.definition.DTypeRef;
 
 class DefinitionExtender
 {

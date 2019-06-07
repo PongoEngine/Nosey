@@ -1,8 +1,5 @@
 package nosey.definition;
 
-import nosey.definition.DType;
-import nosey.definition.DType.DTypeRef;
-
 class DArg
 {
     public var name (default, null):String;

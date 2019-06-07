@@ -1,7 +1,5 @@
 package nosey.definition;
 
-import nosey.definition.DType.DTypeRef;
-
 class DParameter
 {
     public var type :DRef<DType>;
