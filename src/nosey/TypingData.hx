@@ -16,6 +16,11 @@ class TypingData
         this.enums = new Map<String, DEnum>();
     }
 
+    public static function getClass(data :TypingData, name :String) : EditorClass
+    {
+        return data.classes.get(name);
+    }
+
     public static function getExtended(data :TypingData, class_ :EditorClass) : Array<EditorClass>
     {
         var editorClasses = class_.extendedBy.map(function(name) {

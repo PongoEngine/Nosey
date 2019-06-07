@@ -3,6 +3,9 @@ package nosey;
 import nosey.DefinitionBuilder;
 import nosey.DefinitionExtender;
 import haxe.Serializer;
+import haxe.crypto.BaseCode;
+import haxe.crypto.Base64;
+import haxe.Json;
 
 class TypeWriter
 {
@@ -19,7 +22,9 @@ class TypeWriter
                 typingData.enums.set(enum_.name, enum_);
             }
 
-            sys.io.File.saveContent(path + '/baseComponents.json', Serializer.run(typingData));
+            var data = BaseCode.encode(Serializer.run(typingData), Base64.CHARS);
+            sys.io.File.saveContent(path + '/baseComponents.data', data);
+            sys.io.File.saveContent(path + '/testingData.json', Json.stringify(typingData, "  "));
         });
 
         haxe.macro.Context.onAfterTyping(function(moduleTypes :Array<haxe.macro.Type.ModuleType>) {
