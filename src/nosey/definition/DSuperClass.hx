@@ -12,7 +12,7 @@ class DSuperClass
     }
 
 #if macro
-    public static function fromSuperClass(superClass:Null<{t:DRef<haxe.macro.Type.ClassType>, params:Array<haxe.macro.Type>}>) : DSuperClass
+    public static function fromSuperClass(superClass:Null<{t:haxe.macro.Type.Ref<haxe.macro.Type.ClassType>, params:Array<haxe.macro.Type>}>) : DSuperClass
     {
         if(superClass==null) {
             return null;

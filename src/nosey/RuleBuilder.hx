@@ -10,11 +10,11 @@ class RuleBuilder
     {
         var map = new Map<String,DType>();
         for(i in 0...genericParams.length) {
-            switch genericParams[i].type.get() {
+            switch genericParams[i].type {
                 case FUNC(val): 
                     throw "FUNC NOT POSSIBLE";
                 case TYPE(module, params):
-                    map.set(module, concreteParams[i].type.get());
+                    map.set(module, concreteParams[i].type);
             }
         }
         return mapDType.bind(map);

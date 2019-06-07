@@ -3,9 +3,9 @@ package nosey.definition;
 class DVariable
 {
     public var name (default, null):String;
-    public var type (default, null):DRef<DType>;
+    public var type (default, null):DType;
 
-    public function new(name :String, type :DRef<DType>) : Void
+    public function new(name :String, type :DType) : Void
     {
         this.name = name;
         this.type = type;
@@ -19,7 +19,7 @@ class DVariable
 
     public static function fromType(fieldName :String, type :haxe.macro.Type) : DVariable
     {
-        return new DVariable(fieldName, new DTypeRef(nosey.definition.DType.DTypeTools.fromType(type)));
+        return new DVariable(fieldName, nosey.definition.DType.DTypeTools.fromType(type));
     }
 #end
 }

@@ -7,7 +7,6 @@ import nosey.definition.DParameter;
 import nosey.definition.DFunction;
 import nosey.definition.DType;
 import nosey.definition.DArg;
-import nosey.definition.DTypeRef;
 
 class DefinitionExtender
 {
@@ -41,8 +40,8 @@ class DefinitionExtender
         if(definition != null) {
             var resolveType = RuleBuilder.make(concreteParams, definition.params);
             return getVariables(data, getParentDef(data, definition), getConcreteParams(definition, resolveType), variables.concat(definition.variables.map(function(var_) {
-                var type = resolveType(var_.type.get());
-                return new DVariable(var_.name, new DTypeRef(type));
+                var type = resolveType(var_.type);
+                return new DVariable(var_.name, type);
             })));
         }
         else {
@@ -56,11 +55,11 @@ class DefinitionExtender
             var resolveType = RuleBuilder.make(concreteParams, definition.params);
             return getMethods(data, getParentDef(data, definition), getConcreteParams(definition, resolveType), methods.concat(definition.methods.map(function(method) {
                 var args = method.arguments.map(function(arg :DArg) {
-                    var type = resolveType(arg.type.get());
-                    return new DArg(arg.name, arg.opt, new DTypeRef(type));
+                    var type = resolveType(arg.type);
+                    return new DArg(arg.name, arg.opt, type);
                 });
-                var retType = resolveType(method.ret.get());
-                return new DFunction(method.name, args, new DTypeRef(retType));
+                var retType = resolveType(method.ret);
+                return new DFunction(method.name, args, retType);
             })));
         }
         else {
@@ -80,8 +79,8 @@ class DefinitionExtender
             : (resolveType == null)
                 ? definition.superClass.params
                 : definition.superClass.params.map(function(dParam) {
-                    var type = resolveType(dParam.type.get());
-                    return new DParameter(new DTypeRef(type));
+                    var type = resolveType(dParam.type);
+                    return new DParameter(type);
                 });
     }
 }

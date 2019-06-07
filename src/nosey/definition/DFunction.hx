@@ -4,9 +4,9 @@ class DFunction
 {
     public var name (default, null):String;
     public var arguments (default, null):Array<DArg>;
-    public var ret (default, null):DRef<DType>;
+    public var ret (default, null):DType;
 
-    public function new(name :String, arguments :Array<DArg>, ret :DRef<DType>) : Void
+    public function new(name :String, arguments :Array<DArg>, ret :DType) : Void
     {
         this.name = name;
         this.arguments = arguments;
@@ -19,7 +19,7 @@ class DFunction
         return switch field.type {
             case TFun(args,ret): 
                 var retType = nosey.definition.DType.DTypeTools.fromType(ret);
-                new DFunction(field.name, args.map(DArg.fromArg), new DTypeRef(retType));
+                new DFunction(field.name, args.map(DArg.fromArg), retType);
             case _: throw "fromClassField NOT_VALID";
         }
     }

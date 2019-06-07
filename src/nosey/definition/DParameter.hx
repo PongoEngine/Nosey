@@ -2,9 +2,9 @@ package nosey.definition;
 
 class DParameter
 {
-    public var type :DRef<DType>;
+    public var type :DType;
 
-    public function new(type :DRef<DType>) : Void
+    public function new(type :DType) : Void
     {
         this.type = type;
     }
@@ -17,7 +17,7 @@ class DParameter
 
     public static function fromType(type :haxe.macro.Type) : DParameter
     {
-        return new DParameter(new DTypeRef(nosey.definition.DType.DTypeTools.fromType(type)));
+        return new DParameter(nosey.definition.DType.DTypeTools.fromType(type));
     }
 #end
 }
