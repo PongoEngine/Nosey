@@ -10,9 +10,9 @@ class Definition
     public var extendedBy (default, null):Array<String>;
     public var variables (default, null):Array<DVariable>;
     public var methods (default, null):Array<DFunction>;
-    public var constructor (default, null):DFunction;
+    public var new_ (default, null):DFunction;
 
-    public function new(module :String, params :Array<DParameter>, isInterface :Bool, superClass :DSuperClass, interfaces :Array<String>, extendedBy :Array<String>, variables :Array<DVariable>, methods :Array<DFunction>, constructor :DFunction) : Void
+    public function new(module :String, params :Array<DParameter>, isInterface :Bool, superClass :DSuperClass, interfaces :Array<String>, extendedBy :Array<String>, variables :Array<DVariable>, methods :Array<DFunction>, new_ :DFunction) : Void
     {
         this.module = module;
         this.params = params;
@@ -22,7 +22,7 @@ class Definition
         this.extendedBy = extendedBy;
         this.variables = variables;
         this.methods = methods;
-        this.constructor = constructor;
+        this.new_ = new_;
     }
 
 #if macro

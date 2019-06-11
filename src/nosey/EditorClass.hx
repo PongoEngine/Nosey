@@ -11,9 +11,9 @@ class EditorClass
     public var extendedBy (default, null):Array<String>;
     public var variables (default, null):Array<DVariable>;
     public var methods (default, null):Array<DFunction>;
-    public var constructor (default, null):DFunction;
+    public var new_ (default, null):DFunction;
 
-    public function new(name :String, superClass :String, isTyped :Bool, extendedBy :Array<String>, variables :Array<DVariable>, methods :Array<DFunction>, constructor :DFunction) : Void
+    public function new(name :String, superClass :String, isTyped :Bool, extendedBy :Array<String>, variables :Array<DVariable>, methods :Array<DFunction>, new_ :DFunction) : Void
     {
         this.name = name;
         this.superClass = superClass;
@@ -21,6 +21,6 @@ class EditorClass
         this.extendedBy = extendedBy;
         this.variables = variables;
         this.methods = methods;
-        this.constructor = constructor;
+        this.new_ = new_;
     }
 }

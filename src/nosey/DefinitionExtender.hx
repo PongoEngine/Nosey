@@ -12,7 +12,7 @@ class DefinitionExtender
 {
     public static function createEditorClass(data :Map<String, Definition>, definition :Definition) : EditorClass
     {
-        var isConstructable = definition.params.length == 0 && !definition.isInterface && definition.constructor != null;
+        var isConstructable = definition.params.length == 0 && !definition.isInterface && definition.new_ != null;
         var superClass = (definition.superClass == null) ? null : definition.superClass.name;
         return new EditorClass
             ( definition.module
@@ -31,7 +31,7 @@ class DefinitionExtender
                 , getConcreteParams(definition, null)
                 , definition.methods
                 )
-            , definition.constructor
+            , definition.new_
             );
     }
 
