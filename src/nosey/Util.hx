@@ -8,6 +8,7 @@ import nosey.type.NClassType;
 import nosey.type.NDefType;
 import nosey.type.NEnumField;
 import nosey.type.NEnumType;
+import haxe.ds.Option;
 
 class Util
 {
@@ -47,35 +48,71 @@ class Util
         return isIncluded(target, excludes);
     }
 
-    public static function createNClassField(classField :haxe.macro.Type.ClassField) : NClassField
+    public static function createNClassField(classField :haxe.macro.Type.ClassField) : Option<NClassField>
     {
-        return {
+        var shouldCreate = #if hidePrivate classField.isPublic; #else true; #end
+        return shouldCreate ? Some({
+    #if !hidePrivate
             isPublic: classField.isPublic,
+    #end
             kind: createNFieldKind(classField.kind),
             name: classField.name,
             overloads: classField.overloads.get() != null
-                ? classField.overloads.get().map(o -> createNClassField(o))
+                ? classField.overloads.get()
+                    .map(o -> createNClassField(o))
+                    .map(option -> {
+                        switch option {
+                            case Some(v): v;
+                            case None: null;
+                        }
+                    })
+                    .filter(o -> o != null)
                 : [],
             params: classField.params.map(p -> createNTypeParameter(p)),
             type: createNType(classField.type)
-        };
+        }) : None;
     }
 
     public static function createNClassType(classType :haxe.macro.Type.ClassType) : NClassType
     {
         return {
             constructor: classType.constructor != null
-                ? createNClassField(classType.constructor.get())
+                ? switch createNClassField(classType.constructor.get()) {
+                    case Some(v): v;
+                    case None: null;
+                }
                 : null,
             fields: classType.fields.get() != null
-                ? classType.fields.get().map(f -> createNClassField(f))
+                ? classType.fields.get()
+                    .map(f -> createNClassField(f))
+                    .map(option -> {
+                        switch option {
+                            case Some(v): v;
+                            case None: null;
+                        }
+                    })
+                    .filter(o -> o != null)
                 : [],
+#if !hideExtern
             isExtern: classType.isExtern,
+#end
+#if !hideInterface
             isInterface: classType.isInterface,
+#end
+#if !hidePrivate
             isPrivate:  classType.isPrivate,
+#end
             module: classType.module,
             name: classType.name,
-            overrides: classType.overrides.map(o -> createNClassField(o.get())),
+            overrides: classType.overrides
+                .map(o -> createNClassField(o.get()))
+                .map(option -> {
+                    switch option {
+                        case Some(v): v;
+                        case None: null;
+                    }
+                })
+                .filter(o -> o != null),
             pack: classType.pack,
             params: classType.params.map(p -> createNTypeParameter(p)),
             superClass: classType.superClass != null
@@ -90,8 +127,12 @@ class Util
     public static function createNDefType(defType :haxe.macro.Type.DefType) : NDefType
     {
         return {
+#if !hideExtern
             isExtern: defType.isExtern,
+#end
+#if !hidePrivate
             isPrivate: defType.isPrivate,
+#end
             module: defType.module,
             name: defType.name,
             pack: defType.pack,
@@ -119,8 +160,12 @@ class Util
 
         return {
             constructs: constructs,
+#if !hideExtern
             isExtern: enumType.isExtern,
+#end
+#if !hidePrivate
             isPrivate: enumType.isPrivate,
+#end
             module: enumType.module,
             name: enumType.name,
             names: enumType.names,
