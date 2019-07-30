@@ -1,0 +1,13 @@
+{
+    "name": "nosey",
+    "url" : "https://github.com/PongoEngine/Nosey",
+    "license": "BSD",
+    "tags": ["json", "type", "export"],
+    "description": "Export haxe to json.",
+    "version": "0.0.1",
+    "classPath": "src/",
+    "releasenote": "Initial release, everything is working correctly.",
+    "contributors": ["Jeremy"],
+    "dependencies": {
+    }
+  }
